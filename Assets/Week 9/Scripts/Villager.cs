@@ -13,7 +13,7 @@ public class Villager : MonoBehaviour
     public GameObject highlight;
 
     protected Vector2 destination;
-    Vector2 movement;
+    protected Vector2 movement;
     float speed = 3;
 
     void Start()
