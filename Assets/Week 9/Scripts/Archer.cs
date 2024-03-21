@@ -6,6 +6,7 @@ public class Archer : Villager
 {
     public GameObject arrowPrefab;
     public Transform spawnPoint;
+
     protected override void Attack()
     {
         destination = transform.position;

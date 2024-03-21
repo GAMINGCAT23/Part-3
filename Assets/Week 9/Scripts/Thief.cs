@@ -1,32 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Thief : Villager
 {
-    public GameObject DaggerPrefab;
-    public Transform spawnPoint;
+    public GameObject knifePrefab;
+    public Transform spawnPoint1;
     public Transform spawnPoint2;
+    Coroutine dashing;
+    //float timer;
+    //public float dashTime = 2;
+    //bool isDashing;
+    protected override void Attack()
+    {
+        if(dashing != null)
+        {
+            StopCoroutine(dashing);
+            StopAllCoroutines();
+        }
+        dashing = StartCoroutine(Dash());
+    }
+    IEnumerator Dash()
+    {
+        //dash towards mouse
+        destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        speed = 7;
+        while ( speed > 3 )
+        {
+            yield return null;
+        }
 
+        base.Attack();
+        yield return new WaitForSeconds(0.1f);
+        Instantiate(knifePrefab, spawnPoint1.position, spawnPoint1.rotation);
+        yield return new WaitForSeconds(0.1f);
+        Instantiate(knifePrefab, spawnPoint2.position, spawnPoint2.rotation);
+    }
+
+    //protected override void Update()
+    //{
+    //    base.Update();
+    //    if (isDashing == true)
+    //    {
+    //        Dash();
+    //    }
+    //}
     public override ChestType CanOpen()
     {
         return ChestType.Thief;
     }
 
-    protected override void Attack()
+    public override string ToString()
     {
-        if (transform.localScale.x > 0)
-        {
-            transform.Translate(Vector3.left);
-        }
-        else if (transform.localScale.x < 0)
-        {
-            transform.Translate(Vector3.right);
-        }
-        destination = transform.position;
-        Instantiate(DaggerPrefab, spawnPoint.position, spawnPoint.rotation);
-        Instantiate(DaggerPrefab, spawnPoint2.position, spawnPoint2.rotation);
-        base.Attack();
+        return "Hi I'm Bob.";
     }
 }
