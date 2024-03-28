@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     bool B2 = false;
     bool B3 = false;
 
+    public float damage = 10;
+
     public float maxHealth = 100f;
     private float currentHealth;
 
@@ -33,6 +35,9 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         destination = transform.position;
+
+        currentHealth = maxHealth;
+        UpdateHealthUI();
     }
 
     private void FixedUpdate()
@@ -41,11 +46,11 @@ public class Player : MonoBehaviour
 
         if (movement.x > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(-1, 1, 1);
         }
         else if (movement.x < 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(1, 1, 1);
         }
 
         if (movement.magnitude < 0.1)
@@ -93,7 +98,7 @@ public class Player : MonoBehaviour
             B3 = true;
         }
 
-        //Debug.Log(B1 | B2 | B3);
+        Debug.Log("player" + currentHealth);
     }
 
     private void Shoot()
@@ -132,6 +137,7 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        Debug.Log("take damaged");
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
         UpdateHealthUI();
