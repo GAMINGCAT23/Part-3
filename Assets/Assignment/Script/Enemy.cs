@@ -5,13 +5,16 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public Transform player;
+    Animator animator;
     public float moveSpeed = 3f;
     public float maxHealth = 100f;
     private float currentHealth;
 
+
     protected virtual void Start()
     {
         currentHealth = maxHealth;
+        animator = GetComponent<Animator>();
     }
 
     protected virtual void Update()
@@ -20,6 +23,7 @@ public class Enemy : MonoBehaviour
         transform.Translate(direction * moveSpeed * Time.deltaTime);
 
         Debug.Log("Enemy" + currentHealth.ToString());
+        animator.SetFloat("Speed", moveSpeed);
     }
 
     protected virtual void TakeDamage(float damage)
