@@ -13,7 +13,7 @@ public class EnemySpawn : MonoBehaviour
     {
         spawnTimer += Time.deltaTime;
 
-        if (spawnTimer >= spawnInterval)
+        if (spawnTimer >= spawnInterval && GameCon.MonsterNumber < 6)
         {
             SpawnEnemies();
             spawnTimer = 0f;
@@ -30,5 +30,7 @@ public class EnemySpawn : MonoBehaviour
 
         GameObject enemy1 = Instantiate(enemyPrefabs[enemyIndex1], spawnPoints[spawnIndex1].position, Quaternion.identity);
         GameObject enemy2 = Instantiate(enemyPrefabs[enemyIndex2], spawnPoints[spawnIndex2].position, Quaternion.identity);
+
+        GameCon.SetMonsterNum(GameCon.MonsterNumber + 2);
     }
 }

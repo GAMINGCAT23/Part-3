@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
         }
 
         rb.MovePosition(rb.position + movement.normalized * speed * Time.deltaTime);
+        GameCon.SetPosition(transform.position);
     }
 
     private void Update()
@@ -105,8 +106,11 @@ public class Player : MonoBehaviour
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f;
+        Vector3 shootdirection = (mousePosition - transform.position).normalized;
+        float angle = Mathf.Atan2(shootdirection.y, shootdirection.x) * Mathf.Rad2Deg - 90f;
+        bulletSpawn.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        Vector3 shootDirection = (mousePosition - transform.position).normalized;
+        //Vector3 shootDirection = (mousePosition - transform.position).normalized;
         
         if (B1)
         {
@@ -126,7 +130,7 @@ public class Player : MonoBehaviour
         //Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.AddForce(shootDirection * shootForce, ForceMode2D.Impulse);
+            rb.AddForce(shootdirection * shootForce, ForceMode2D.Impulse);
         }
     }
 

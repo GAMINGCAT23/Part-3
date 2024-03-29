@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        Vector2 direction = (player.position - transform.position).normalized;
+        Vector2 direction = (GameCon.playerPosition - transform.position).normalized;
         transform.Translate(direction * moveSpeed * Time.deltaTime);
 
         Debug.Log("Enemy" + currentHealth.ToString());
@@ -50,6 +50,7 @@ public class Enemy : MonoBehaviour
                 float damage = bullet.damage;
                 TakeDamage(damage);
                 Destroy(other.gameObject);
+                GameCon.SetMonsterNum(GameCon.MonsterNumber - 1);
             }
         }
     }

@@ -78,6 +78,7 @@ public class Range : Enemy
             {
                 player.TakeDamage(damage);
                 Destroy(gameObject);
+                GameCon.SetMonsterNum(GameCon.MonsterNumber - 1);
             }
         }
     }
